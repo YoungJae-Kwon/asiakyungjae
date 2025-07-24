@@ -10,14 +10,14 @@ import streamlit as st
 # 한글 폰트 설정
 # plt.rcParams['font.family'] = "AppleGothic"
 # Windows, 리눅스 사용자
-plt.rcParams['font.family'] = "Malgun Gothic"
+plt.rcParams['font.family'] = "NanumGothic"
 plt.rcParams['axes.unicode_minus'] = False
 
 class PensionData():
     def __init__(self, filepath):
-        self.df = pd.read_csv(os.path.join(filepath), encoding='cp949')
-        self.pattern1 = r'(\([^)]+\))'
-        self.pattern2 = r'(\[[^)]+\])'
+        self.df = pd.read_csv(filepath, encoding='cp949')
+        self.pattern1 = '(\([^)]+\))'
+        self.pattern2 = '(\[[^)]+\])'
         self.pattern3 = '[^A-Za-z0-9가-힣]'
         self.preprocess()
           
@@ -71,10 +71,10 @@ class PensionData():
     def get_data(self):
         return self.df
 
-@st.cache_data
+@st.cache_resource
 def read_pensiondata():
-    # data = PensionData('https://www.dropbox.com/s/nxeo1tziv05ejz7/national-pension.csv?dl=1')
-    data = PensionData('national-pension.csv')
+    url = 'https://www.dropbox.com/s/nxeo1tziv05ejz7/national-pension.csv?dl=1'
+    data = PensionData(url)
     return data
 
 data = read_pensiondata()
